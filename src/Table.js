@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import Card from './Card'
+import Joke from './Joke';
+import axios from 'axios';
 
 class Table extends Component {
   constructor(props) {
@@ -7,22 +8,25 @@ class Table extends Component {
     this.state = {
       jokes: [],
       loading: true
-    }
+    };
   }
 
   async componentDidMount() {
     const res = await axios({
       method: 'get',
       url: 'https://icanhazdadjoke.com/search?limit=10',
-      responseType: 'application/json'
+      headers: {
+        Accept: 'application/json'
+      }
     });
-    this.setState({jokes: res.results, loading: false});
+    console.log(res.data.results)
+    this.setState({ jokes: res.data.results, loading: false });
   }
 
-
   render() {
-    const cards = this.state.jokes.map(joke=><Card joke />)
-    return cards;
+    const jokes = this.state.jokes.map(joke => <Joke key={joke.id} joke={joke.joke} />);
+    console.log(jokes);
+    return <>{jokes}</>;
   }
 }
 

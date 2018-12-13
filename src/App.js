@@ -5,9 +5,7 @@ import Table from './Table';
 
 class App extends Component {
   render() {
-    return (
-      <Table></Table>
-    )
+    return <Table />;
   }
 }
 
